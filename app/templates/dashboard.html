@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Dashboard · Opportunity Hunter{% endblock %}{% block content %}
+<section class="hero"><p class="eyebrow">Opportunity intelligence</p><h1>Your next strong opportunity.</h1><p>Fresh opportunities ranked against your student profile.</p><a class="button" href="/opportunities?recommended=true">View recommended</a></section>
+<section class="stats">{% for label, value in [('Total opportunities',stats.total),('Recommended',stats.recommended),('Average match',stats.average_match ~ '%'),('Highest match',stats.highest_match ~ '%'),("Today's new",stats.today_new)] %}<article><small>{{ label }}</small><strong>{{ value }}</strong></article>{% endfor %}</section>
+<section class="section-head"><h2>Latest opportunities</h2><a href="/opportunities">See all →</a></section><section class="cards">{% for opportunity in opportunities %}{% include "card.html" %}{% else %}<p class="empty">No opportunities yet. Run the pipeline or wait for the scheduled check.</p>{% endfor %}</section>
+{% endblock %}
