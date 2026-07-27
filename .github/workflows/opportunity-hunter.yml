@@ -1,0 +1,27 @@
+name: Opportunity Hunter Scheduler
+
+on:
+  schedule:
+    # Every 30 minutes
+    - cron: "*/30 * * * *"
+
+  workflow_dispatch:
+
+jobs:
+  trigger:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Wake up Render
+        run: |
+          curl -L --retry 5 --retry-delay 10 \
+          https://opportunity-hunter-ai-wnld.onrender.com/health || true
+
+      - name: Wait for startup
+        run: sleep 40
+
+      - name: Trigger Opportunity Hunter
+        run: |
+          curl -X POST \
+          https://opportunity-hunter-ai-wnld.onrender.com/run-now \
+          -H "accept: application/json"
